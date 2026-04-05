@@ -1,0 +1,71 @@
+import React, { useState } from "react";
+import { ShoppingCart } from "lucide-react";
+
+const products = [
+  { id: 1, name: "Whey Protein", price: 120, desc: "Lean muscle recovery" },
+  { id: 2, name: "Isolate Protein", price: 150, desc: "Ultra pure performance" },
+  { id: 3, name: "Creatine", price: 60, desc: "Strength & power" },
+  { id: 4, name: "Pre-Workout", price: 80, desc: "Explosive energy" },
+];
+
+export default function FitoxApp() {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  return (
+    <div className="bg-black text-white min-h-screen">
+      {/* Navbar */}
+      <div className="flex justify-between items-center p-5 border-b border-gray-800">
+        <h1 className="text-xl font-semibold">Fitox Nutrition</h1>
+        <div className="flex items-center gap-2">
+          <ShoppingCart />
+          <span>{cart.length}</span>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <div className="text-center py-20 px-4">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          Refined Nutrition. Visible Strength.
+        </h2>
+        <p className="text-gray-400">Premium supplements for elite performance</p>
+      </div>
+
+      {/* Products */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+        {products.map((item) => (
+          <div key={item.id} className="bg-[#111] p-5 rounded-2xl shadow-lg">
+            <div className="h-40 bg-gray-800 rounded-xl mb-4"></div>
+            <h3 className="text-lg font-semibold">{item.name}</h3>
+            <p className="text-gray-400 text-sm">{item.desc}</p>
+            <p className="mt-2 font-bold">${item.price}</p>
+            <button
+              onClick={() => addToCart(item)}
+              className="mt-4 w-full bg-white text-black py-2 rounded-xl font-semibold hover:opacity-80"
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Cart Summary */}
+      <div className="p-6 border-t border-gray-800">
+        <h2 className="text-xl mb-3">Cart</h2>
+        {cart.length === 0 ? (
+          <p className="text-gray-400">No items added</p>
+        ) : (
+          cart.map((item, i) => (
+            <div key={i} className="flex justify-between py-2">
+              <span>{item.name}</span>
+              <span>${item.price}</span>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
